@@ -5,9 +5,9 @@ interface ParamTypes {
   searchphrase: string;
 }
 
-const SearchResults = () => {
+const Search = () => {
   const { searchphrase } = useParams<ParamTypes>();
   return <div>Search Result for {searchphrase}</div>;
 };
 
-export default SearchResults;
+export default Search;
