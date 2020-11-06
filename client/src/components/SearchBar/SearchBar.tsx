@@ -3,6 +3,7 @@ import { useDebounce } from 'hooks/useDebounce';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
+import { convertSlug } from 'utils/convertSlug';
 import { fetcher } from 'utils/fetcher';
 import { UnsplashAutocompleteResponse } from '../../types/index';
 
@@ -38,7 +39,7 @@ const SearchBar = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    push(`/search/${searchTerm}`);
+    push(`/search/${convertSlug(searchTerm)}`);
   };
 
   return (
