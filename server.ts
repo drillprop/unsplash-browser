@@ -9,20 +9,20 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post('/autocomplete/:searchterm', async (req, res) => {
+app.get('/autocomplete/:searchterm', async (req, res) => {
   try {
     const { searchterm } = req.params;
     const response = await fetch(
       `https://unsplash.com/nautocomplete/${searchterm}`
     );
     const json = await response.json();
-    res.send(json);
+    res.send(json.autocomplete);
   } catch (error) {
     res.status(400).send('Something went wrong');
   }
 });
 
-app.post('/search/:searchterm', async (req, res) => {
+app.get('/search/:searchterm', async (req, res) => {
   try {
     const { searchterm } = req.params;
     const response = await fetch(
