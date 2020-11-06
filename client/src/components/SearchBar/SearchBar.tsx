@@ -1,8 +1,8 @@
 import { useCombobox } from 'downshift';
+import { useDebounce } from 'hooks/useDebounce';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { useHistory } from 'react-router-dom';
-import { useDebounce } from 'hooks/useDebounce';
+import { Link, useHistory } from 'react-router-dom';
 import { fetcher } from 'utils/fetcher';
 import { UnsplashAutocompleteResponse } from '../../types/index';
 
@@ -30,16 +30,14 @@ const SearchBar = () => {
     highlightedIndex,
     isOpen,
   } = useCombobox({
-    items: data || [],
-    itemToString: (item: any) => (item ? item.word : ''),
+    items: data?.map((suggestion) => suggestion.query) || [],
     onInputValueChange: ({ inputValue }) => {
-      setSearchTerm(inputValue || '  ');
+      setSearchTerm(inputValue || '');
     },
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('called');
     push(`/search/${searchTerm}`);
   };
 
@@ -47,21 +45,22 @@ const SearchBar = () => {
     <form onSubmit={handleSubmit}>
       <label {...getLabelProps()}>
         Search image
+        <input type='search' {...getInputProps()} />
         <div {...getComboboxProps()}>
-          <input type='search' {...getInputProps()} />
           <ul {...getMenuProps()}>
             {isOpen &&
-              data?.map((item, index) => (
+              searchTerm &&
+              data?.map(({ query }, index) => (
                 <li
+                  key={`${query}${index}`}
                   style={
                     highlightedIndex === index
                       ? { backgroundColor: '#bde4ff' }
                       : {}
                   }
-                  key={`${item.query}${index}`}
-                  {...getItemProps({ item, index })}
+                  {...getItemProps({ item: query, index })}
                 >
-                  {item.query}
+                  <Link to={`/search/${query}`}>{query}</Link>
                 </li>
               ))}
           </ul>
