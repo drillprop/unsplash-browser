@@ -1,0 +1,22 @@
+.main {
+  color: white;
+  height: 100vh;
+  background-image: url('../../assets/images/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
+}
+.heroWrapper {
+  padding-top: 5rem;
+  width: 66%;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-size: 3rem;
+}
+
+.heroText {
+  font-size: 1rem;
+}
