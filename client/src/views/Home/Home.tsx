@@ -1,10 +1,16 @@
 import SearchBar from 'components/SearchBar/SearchBar';
 import React from 'react';
 import styles from './Home.module.scss';
+import background from 'assets/images/bg.jpg';
 
 const Home = () => {
   return (
     <main className={styles.main}>
+      <img
+        className={styles.heroBackground}
+        src={background}
+        alt=' hero background'
+      />
       <div className={styles.heroWrapper}>
         <header>
           <h1 className={styles.heroTitle}>Unsplash</h1>
