@@ -1,14 +1,18 @@
+import { ReactComponent as SearchIcon } from 'assets/search-icon.svg';
+import clsx from 'clsx';
 import { useCombobox } from 'downshift';
 import { useDebounce } from 'hooks/useDebounce';
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
-import { convertSlug } from 'utils/convertSlug';
+import { UnsplashAutocompleteResponse } from 'types/api';
+import { convertSpacesToDashes } from 'utils/convertSpacesToDashes';
 import { fetcher } from 'utils/fetcher';
-import { UnsplashAutocompleteResponse } from '../../types/index';
+import styles from './SearchBar.module.scss';
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isActive, setIsActive] = useState(false);
 
   const { push } = useHistory();
 
@@ -24,11 +28,9 @@ const SearchBar = () => {
 
   const {
     getComboboxProps,
-    getLabelProps,
     getInputProps,
     getMenuProps,
     getItemProps,
-    highlightedIndex,
     isOpen,
   } = useCombobox({
     items: data?.map((suggestion) => suggestion.query) || [],
@@ -39,36 +41,51 @@ const SearchBar = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    push(`/search/${convertSlug(searchTerm)}`);
+    if (searchTerm) {
+      push(`/search/${convertSpacesToDashes(searchTerm)}`);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label {...getLabelProps()}>
-        Search image
-        <input type='search' {...getInputProps()} />
-        <div {...getComboboxProps()}>
-          <ul {...getMenuProps()}>
-            {isOpen &&
-              searchTerm &&
-              data?.map(({ query }, index) => (
-                <li
-                  key={`${query}${index}`}
-                  style={
-                    highlightedIndex === index
-                      ? { backgroundColor: '#bde4ff' }
-                      : {}
-                  }
-                  {...getItemProps({ item: query, index })}
-                >
-                  <Link to={`/search/${query}`}>{query}</Link>
-                </li>
-              ))}
-          </ul>
-        </div>
-      </label>
-      <button type='submit'>search</button>
-    </form>
+    <>
+      <form
+        className={clsx(styles.form, { [styles.active]: isActive })}
+        onSubmit={handleSubmit}
+      >
+        <button
+          title='Search Image'
+          className={styles.searchButton}
+          type='submit'
+        >
+          <SearchIcon className={clsx({ [styles.active]: isActive })} />
+        </button>
+        <input
+          required
+          placeholder='Search free high-resolution photos'
+          {...getInputProps()}
+          className={styles.searchInput}
+          onFocus={() => setIsActive(true)}
+          onBlur={() => setIsActive(false)}
+        />
+      </form>
+      <div {...getComboboxProps()} className={styles.autocompleteBox}>
+        <ul {...getMenuProps()} className={styles.autocompleteList}>
+          {isOpen &&
+            searchTerm &&
+            data?.map(({ query }, index) => (
+              <li
+                key={`${query}${index}`}
+                {...getItemProps({ item: query, index })}
+                className={styles.autocompleteItem}
+              >
+                <Link to={`/search/${convertSpacesToDashes(query)}`}>
+                  {query}
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </>
   );
 };
 
