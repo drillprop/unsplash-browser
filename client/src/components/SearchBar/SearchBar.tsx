@@ -10,7 +10,11 @@ import { convertSpacesToDashes } from 'utils/convertSpacesToDashes';
 import { fetcher } from 'utils/fetcher';
 import styles from './SearchBar.module.scss';
 
-const SearchBar = () => {
+type Props = {
+  small?: boolean;
+};
+
+const SearchBar = ({ small }: Props) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isActive, setIsActive] = useState(false);
 
@@ -22,7 +26,7 @@ const SearchBar = () => {
     ['autocomplete', debouncedSearchTerm],
     fetcher,
     {
-      enabled: debouncedSearchTerm.length > 3,
+      enabled: debouncedSearchTerm.length >= 3,
     }
   );
 
@@ -49,7 +53,11 @@ const SearchBar = () => {
   return (
     <>
       <form
-        className={clsx(styles.form, { [styles.active]: isActive })}
+        className={clsx(
+          styles.form,
+          isActive && styles.active,
+          small && styles.small
+        )}
         onSubmit={handleSubmit}
       >
         <button
@@ -60,6 +68,7 @@ const SearchBar = () => {
           <SearchIcon className={clsx({ [styles.active]: isActive })} />
         </button>
         <input
+          type='search'
           required
           placeholder='Search free high-resolution photos'
           {...getInputProps()}
