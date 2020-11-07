@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from 'views/Home';
+import Home from 'views/Home/Home';
+import './styles/global.scss';
 import Search from 'views/Search';
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
           <Route exact path='/'>
             <Home />
           </Route>
-          <Route path='/search/:searchphrase'>
+          <Route path='/search/:searchterm'>
             <Search />
           </Route>
         </Switch>
