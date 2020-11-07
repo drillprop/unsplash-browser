@@ -1,4 +1,4 @@
-import { ReactComponent as SearchIcon } from 'assets/search-icon.svg';
+import { ReactComponent as SearchIcon } from 'assets/icons/search-icon.svg';
 import clsx from 'clsx';
 import { useCombobox } from 'downshift';
 import { useDebounce } from 'hooks/useDebounce';
