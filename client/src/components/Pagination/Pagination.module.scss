@@ -1,0 +1,19 @@
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+.changePage {
+  display: block;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: 1px solid #777;
+  border-radius: 2px;
+  &[aria-disabled='true'] {
+    pointer-events: none;
+    color: #c3c3c3;
+    border: 1px solid #c3c3c3;
+  }
+}

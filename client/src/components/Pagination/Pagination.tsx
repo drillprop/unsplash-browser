@@ -1,37 +1,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from './Pagination.module.scss';
 
 interface Props {
   pageSize: number;
-  totalCount: number;
+  totalPages: number;
   currentPage: number;
   base: string;
 }
 
-const Pagination = ({ pageSize, totalCount, currentPage, base }: Props) => {
-  const totalPages = Math.ceil(totalCount / pageSize);
+const Pagination = ({ totalPages, currentPage, base }: Props) => {
   const prevPage = currentPage - 1;
   const nextPage = currentPage + 1;
   const hasNextPage = nextPage <= totalPages;
   const hasPrevPage = prevPage >= 1;
   return (
-    <>
-      <Link aria-disabled={!hasPrevPage} to={`/${base}/${prevPage}`}>
+    <div className={styles.paginationWrapper}>
+      <Link
+        className={styles.changePage}
+        aria-disabled={!hasPrevPage}
+        to={`/${base}/${prevPage}`}
+      >
         &#x2190; Prev
       </Link>
-      {/* {Array.from({ length: totalPages }).map((_, i) => (
-        <Link
-          className={currentPage === 1 && i === 0 ? 'current' : ''}
-          key={i}
-          to={`/${base}/${i + 1}`}
-        >
-          {i + 1}
-        </Link>
-      ))} */}
-      <Link aria-disabled={!hasNextPage} to={`/${base}/${nextPage}`}>
+      <Link
+        className={styles.changePage}
+        aria-disabled={!hasNextPage}
+        to={`/${base}/${nextPage}`}
+      >
         Next &#x2192;
       </Link>
-    </>
+    </div>
   );
 };
 

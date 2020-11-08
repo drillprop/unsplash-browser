@@ -2,7 +2,7 @@ import Pagination from 'components/Pagination/Pagination';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SearchResults from 'components/SearchResults/SearchResults';
 import React from 'react';
-import { useQuery } from 'react-query';
+import { usePaginatedQuery, useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { UnsplashSearchResponse } from 'types/api';
 import { fetcher } from 'utils/fetcher';
@@ -16,8 +16,8 @@ interface ParamTypes {
 const Search = () => {
   const { searchterm, page } = useParams<ParamTypes>();
 
-  const { data } = useQuery<UnsplashSearchResponse>(
-    ['search', `${searchterm}/${page || 1}`],
+  const { data } = usePaginatedQuery<UnsplashSearchResponse>(
+    [`search/${searchterm}`, page],
     fetcher
   );
 
@@ -36,7 +36,7 @@ const Search = () => {
           <Pagination
             currentPage={Number(page || 1)}
             pageSize={15}
-            totalCount={data.total}
+            totalPages={data.total_pages}
             base={`search/${searchterm}`}
           />
         </>
