@@ -1,3 +1,4 @@
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import Pagination from 'components/Pagination/Pagination';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SearchResults from 'components/SearchResults/SearchResults';
@@ -16,7 +17,7 @@ interface ParamTypes {
 const Search = () => {
   const { searchterm, page } = useParams<ParamTypes>();
 
-  const { data } = usePaginatedQuery<UnsplashSearchResponse>(
+  const { data, isLoading } = usePaginatedQuery<UnsplashSearchResponse>(
     [`search/${searchterm}`, page],
     fetcher
   );
@@ -30,20 +31,26 @@ const Search = () => {
         <SearchBar small />
       </div>
       <h1>{capitalizedTerm}</h1>
-      {data && <SearchResults data={data} />}
-      {data?.results.length ? (
-        <Pagination
-          currentPage={Number(page || 1)}
-          pageSize={15}
-          totalPages={data.total_pages}
-          base={`search/${searchterm}`}
-        />
-      ) : null}
-      {!data?.results.length ? (
+      {isLoading ? (
+        <LoadingSpinner></LoadingSpinner>
+      ) : (
         <>
-          <h2 className={styles.noImages}>No images found</h2>
+          {data && <SearchResults data={data} />}
+          {data?.results.length ? (
+            <Pagination
+              currentPage={Number(page || 1)}
+              pageSize={15}
+              totalPages={data.total_pages}
+              base={`search/${searchterm}`}
+            />
+          ) : null}
+          {!data?.results.length && !isLoading ? (
+            <>
+              <h2 className={styles.noImages}>No images found</h2>
+            </>
+          ) : null}
         </>
-      ) : null}
+      )}
     </main>
   );
 };
