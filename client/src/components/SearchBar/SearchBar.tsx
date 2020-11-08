@@ -75,7 +75,7 @@ const SearchBar = ({ small }: Props) => {
           placeholder='Search free high-resolution photos'
           {...getInputProps({
             onKeyDown: (e) => {
-              if (e.key === 'Enter' && highlightedIndex === -1) {
+              if (e.key === 'Enter' && highlightedIndex === -1 && searchTerm) {
                 closeMenu();
                 push(`/search/${convertSpacesToDashes(searchTerm)}`);
               }
