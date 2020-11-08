@@ -2,7 +2,7 @@ import Pagination from 'components/Pagination/Pagination';
 import SearchBar from 'components/SearchBar/SearchBar';
 import SearchResults from 'components/SearchResults/SearchResults';
 import React from 'react';
-import { usePaginatedQuery, useQuery } from 'react-query';
+import { usePaginatedQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { UnsplashSearchResponse } from 'types/api';
 import { fetcher } from 'utils/fetcher';
@@ -30,15 +30,18 @@ const Search = () => {
         <SearchBar small />
       </div>
       <h1>{capitalizedTerm}</h1>
-      {data ? (
+      {data && <SearchResults data={data} />}
+      {data?.results.length ? (
+        <Pagination
+          currentPage={Number(page || 1)}
+          pageSize={15}
+          totalPages={data.total_pages}
+          base={`search/${searchterm}`}
+        />
+      ) : null}
+      {!data?.results.length ? (
         <>
-          <SearchResults data={data} />
-          <Pagination
-            currentPage={Number(page || 1)}
-            pageSize={15}
-            totalPages={data.total_pages}
-            base={`search/${searchterm}`}
-          />
+          <h2 className={styles.noImages}>No images found</h2>
         </>
       ) : null}
     </main>
