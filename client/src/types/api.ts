@@ -115,3 +115,142 @@ export interface ProfileImage {
   medium: string;
   large: string;
 }
+
+export interface UnsplashPhotoResponse {
+  id: string;
+  created_at: Date;
+  updated_at: Date;
+  promoted_at: Date | null;
+  width: number;
+  height: number;
+  color: string;
+  blur_hash: string;
+  description: null | string;
+  alt_description: null | string;
+  urls: Urls;
+  links: ResultLinks;
+  categories: any[];
+  likes: number;
+  liked_by_user: boolean;
+  current_user_collections: any[];
+  sponsorship: null;
+  user: User;
+  exif: Exif;
+  location: Location;
+  meta: Meta;
+  tags: Tag[];
+  related_collections: RelatedCollections;
+  views: number;
+  downloads: number;
+}
+
+export interface Exif {
+  make: null | string;
+  model: null | string;
+  exposure_time: null | string;
+  aperture: null | string;
+  focal_length: null | string;
+  iso: number | null;
+}
+
+export interface Location {
+  title: null | string;
+  name: null | string;
+  city: null | string;
+  country: null | string;
+  position: Position;
+}
+
+export interface Position {
+  latitude: number | null;
+  longitude: number | null;
+}
+
+export interface Meta {
+  index: boolean;
+}
+
+export interface RelatedCollections {
+  total: number;
+  type: string;
+  results: PhotoResult[];
+}
+
+export interface PhotoResult {
+  id: string;
+  title: string;
+  description: null | string;
+  published_at: Date;
+  last_collected_at: Date;
+  updated_at: Date;
+  curated: boolean;
+  featured: boolean;
+  total_photos: number;
+  private: boolean;
+  share_key: null | string;
+  tags: PhotoResultTag[];
+  links: ResultLinks;
+  user: User;
+  cover_photo: CoverPhoto;
+  preview_photos: PreviewPhoto[];
+}
+
+export interface CoverPhoto {
+  id: string;
+  created_at: Date;
+  updated_at: Date;
+  promoted_at: Date | null;
+  width: number;
+  height: number;
+  color: string;
+  blur_hash: string;
+  description: null | string;
+  alt_description: null | string;
+  urls: Urls;
+  links: ResultLinks;
+  categories: any[];
+  likes: number;
+  liked_by_user: boolean;
+  current_user_collections: any[];
+  sponsorship: null;
+  user: User;
+}
+
+export interface Urls {
+  raw: string;
+  full: string;
+  regular: string;
+  small: string;
+  thumb: string;
+}
+
+export interface ResultLinks {
+  self: string;
+  html: string;
+  photos: string;
+  related: string;
+}
+
+export interface PreviewPhoto {
+  id: string;
+  created_at: Date;
+  updated_at: Date;
+  blur_hash: string;
+  urls: Urls;
+}
+
+export interface PhotoResultTag {
+  type: Type;
+  title: string;
+  source?: TagSource;
+}
+
+export interface TagSource {
+  ancestry: Ancestry;
+  title: string;
+  subtitle: string;
+  description: string;
+  meta_title: string;
+  meta_description: string;
+  cover_photo: CoverPhoto;
+}
