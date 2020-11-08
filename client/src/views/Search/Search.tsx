@@ -30,7 +30,7 @@ const Search = () => {
       <div className={styles.searchbarWrapper}>
         <SearchBar small />
       </div>
-      <h1>{capitalizedTerm}</h1>
+      <h1 className={styles.searchTerm}>{capitalizedTerm}</h1>
       {isLoading ? (
         <LoadingSpinner></LoadingSpinner>
       ) : (

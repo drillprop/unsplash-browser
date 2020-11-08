@@ -9,10 +9,9 @@ interface Props {
 }
 
 const breakpointColumnsObj = {
-  default: 4,
-  1100: 3,
-  700: 2,
-  500: 1,
+  default: 3,
+  900: 2,
+  700: 1,
 };
 
 const SearchResults = ({ data }: Props) => {
