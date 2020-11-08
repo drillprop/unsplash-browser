@@ -15,7 +15,7 @@ Simple app which allows you search images on unsplash.
 
 - [express](https://expressjs.com/)
 
-At first, I wanted to stick to just frontend code, but unfortunately unsplash API doesn't provide autocomplete feature. By looking on the network tab in chrome, I figured out where search queries go. Then, I create my own express server and connected to autocomplete endpoint.
+**Little Disclaimer**. At first, I wanted to stick to just frontend code, but unfortunately unsplash API doesn't provide autocomplete feature. By looking on the network tab in chrome, I figured out where search queries go. Then, I create my own express server and connected to autocomplete endpoint.
 Without a custom server, it wouldn't be possible to get a proper response because of CORS.
 
 ## Installation
