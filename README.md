@@ -1,4 +1,4 @@
-# Unsplash Searcher
+# Unsplash Browser
 
 Simple app which allows you search images on unsplash.
 
@@ -41,3 +41,5 @@ npm run dev
 ```
 
 ## Demo
+
+[demo](https://unsplash-browser.drillprops.usermd.net/)
