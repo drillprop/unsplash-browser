@@ -36,6 +36,8 @@ const SearchBar = ({ small }: Props) => {
     getMenuProps,
     getItemProps,
     isOpen,
+    highlightedIndex,
+    closeMenu,
   } = useCombobox({
     items: data?.map((suggestion) => suggestion.query) || [],
     onInputValueChange: ({ inputValue }) => {
@@ -71,7 +73,14 @@ const SearchBar = ({ small }: Props) => {
           type='search'
           required
           placeholder='Search free high-resolution photos'
-          {...getInputProps()}
+          {...getInputProps({
+            onKeyDown: (e) => {
+              if (e.key === 'Enter' && highlightedIndex === -1) {
+                closeMenu();
+                push(`/search/${convertSpacesToDashes(searchTerm)}`);
+              }
+            },
+          })}
           className={styles.searchInput}
           onFocus={() => setIsActive(true)}
           onBlur={() => setIsActive(false)}
