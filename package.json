@@ -10,7 +10,7 @@
     "build:server": "tsc",
     "build": "rimraf build && npm run build:client && npm run build:server",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "start": "node ./build/server.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
