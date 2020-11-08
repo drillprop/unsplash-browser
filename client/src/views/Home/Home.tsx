@@ -1,9 +1,11 @@
+import background from 'assets/images/bg.jpg';
 import SearchBar from 'components/SearchBar/SearchBar';
+import { useWindowSize } from 'hooks/useWindowSize';
 import React from 'react';
 import styles from './Home.module.scss';
-import background from 'assets/images/bg.jpg';
 
 const Home = () => {
+  const { width } = useWindowSize();
   return (
     <main className={styles.main}>
       <img
@@ -19,7 +21,9 @@ const Home = () => {
           </p>
           <p className={styles.heroText}>Powered by creators everywhere.</p>
         </header>
-        <SearchBar />
+        <section className={styles.searchBarWrapper}>
+          <SearchBar small={width! < 600} />
+        </section>
       </div>
     </main>
   );
