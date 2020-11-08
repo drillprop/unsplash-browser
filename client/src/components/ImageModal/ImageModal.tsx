@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useHistory, useParams } from 'react-router-dom';
 import { UnsplashPhotoResponse } from '../../types/api';
@@ -6,6 +6,7 @@ import { fetcher } from '../../utils/fetcher';
 import styles from './ImageModal.module.scss';
 
 import { ReactComponent as PinIcon } from 'assets/icons/pin-icon.svg';
+import clsx from 'clsx';
 
 interface ParamTypes {
   id: string;
@@ -13,6 +14,7 @@ interface ParamTypes {
 
 const ImageModal = () => {
   const history = useHistory();
+  const [zoom, setZoom] = useState(false);
   const { id } = useParams<ParamTypes>();
   const { data } = useQuery<UnsplashPhotoResponse>(['photo', id], fetcher);
 
@@ -37,8 +39,9 @@ const ImageModal = () => {
         </header>
         <figure className={styles.figureWrapper}>
           <img
-            className={styles.figureImage}
+            className={clsx(styles.figureImage, { [styles.zoomed]: zoom })}
             src={data.urls.regular}
+            onClick={() => setZoom(!zoom)}
             alt={data.alt_description || `unsplash photo by ${data.user.name}`}
           />
           <figcaption className={styles.figureLocation}>
