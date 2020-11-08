@@ -1,22 +1,26 @@
+import ImageModal from 'components/ImageModal/ImageModal';
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import Home from 'views/Home/Home';
+import Search from 'views/Search/Search';
 import './styles/global.scss';
-import Search from 'views/Search';
 
 const App = () => {
+  const location = useLocation();
+  // @ts-ignore
+  const background = location.state && location.state.background;
+
   return (
     <>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path='/'>
-            <Home />
-          </Route>
-          <Route path='/search/:searchterm'>
-            <Search />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <Switch location={background || location}>
+        <Route path='/search/:searchterm/:page?'>
+          <Search />
+        </Route>
+        <Route exact path='/'>
+          <Home />
+        </Route>
+      </Switch>
+      {background && <Route path='/photo/:id' children={<ImageModal />} />}
     </>
   );
 };
