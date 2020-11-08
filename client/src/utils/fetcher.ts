@@ -1,5 +1,5 @@
 export const fetcher = async (endpoint: string, query: string) => {
-  const url = `/${endpoint}/${query}`;
+  const url = `/api/${endpoint}/${query}`;
   const response = await fetch(url);
 
   if (response.ok) {

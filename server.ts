@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -9,7 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/photo/:id', async (req, res) => {
+app.get('/api/photo/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const response = await fetch(
@@ -22,7 +23,7 @@ app.get('/photo/:id', async (req, res) => {
   }
 });
 
-app.get('/autocomplete/:searchterm', async (req, res) => {
+app.get('/api/autocomplete/:searchterm', async (req, res) => {
   try {
     const { searchterm } = req.params;
     const response = await fetch(
@@ -35,7 +36,7 @@ app.get('/autocomplete/:searchterm', async (req, res) => {
   }
 });
 
-app.get('/search/:searchterm/:page?', async (req, res) => {
+app.get('/api/search/:searchterm/:page?', async (req, res) => {
   try {
     const { searchterm, page = 1 } = req.params;
     const response = await fetch(
@@ -46,6 +47,12 @@ app.get('/search/:searchterm/:page?', async (req, res) => {
   } catch (error) {
     res.status(400).send('Something went wrong');
   }
+});
+
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 const port = process.env.PORT || 5000;
